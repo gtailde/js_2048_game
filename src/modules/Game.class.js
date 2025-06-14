@@ -70,9 +70,6 @@ class Game {
     const emptyCells = getEmptyCells();
 
     if (!emptyCells.length) {
-      this.gameStatus = 'lose';
-      this.messageController('message-lose');
-
       return;
     }
 
@@ -125,10 +122,15 @@ class Game {
       stateCopy = transformField(stateCopy);
     }
 
-    this.state = stateCopy;
-    this.addNewCell();
-    this.updateField();
-    this.updateScore(scoreCounter);
+    if (
+      JSON.stringify(this.state) !== JSON.stringify(stateCopy) ||
+      !this.isGameOver()
+    ) {
+      this.state = stateCopy;
+      this.addNewCell();
+      this.updateField();
+      this.updateScore(scoreCounter);
+    }
   }
 
   moveUp() {
@@ -169,10 +171,37 @@ class Game {
       });
     });
 
-    if (this.state.flat(Infinity).includes(2128)) {
+    if (this.state.flat(Infinity).includes(2048)) {
       this.gameStatus = 'win';
       this.messageController('message-win');
     }
+  }
+
+  isGameOver() {
+    const size = this.state.length;
+
+    for (let row = 0; row < size; row++) {
+      for (let col = 0; col < size; col++) {
+        const current = this.state[row][col];
+
+        if (current === 0) {
+          return false;
+        }
+
+        if (col < size - 1 && current === this.state[row][col + 1]) {
+          return false;
+        }
+
+        if (row < size - 1 && current === this.state[row + 1][col]) {
+          return false;
+        }
+      }
+    }
+
+    this.gameStatus = 'lose';
+    this.messageController('message-lose');
+
+    return true;
   }
 }
 
