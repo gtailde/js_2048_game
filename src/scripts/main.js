@@ -27,7 +27,7 @@ const button = document.querySelector('.button');
 
 button.addEventListener('click', () => {
   button.classList.toggle('start');
-  button.classList.toggle('reset');
+  button.classList.toggle('restart');
 
   if (button.innerText === 'Start') {
     button.innerText = 'Reset';

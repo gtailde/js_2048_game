@@ -46,9 +46,9 @@ class Game {
   }
 
   reset() {
+    this.gameStatus = 'idle';
     this.score = 0;
     this.updateScore();
-    this.gameStatus = 'idle';
     this.messageController('message-start');
     this.updateField(true);
     this.state = this.getState();
