@@ -123,7 +123,7 @@ class Game {
     }
 
     if (
-      JSON.stringify(this.state) !== JSON.stringify(stateCopy) ||
+      JSON.stringify(this.state) !== JSON.stringify(stateCopy) &&
       !this.isGameOver()
     ) {
       this.state = stateCopy;
