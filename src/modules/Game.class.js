@@ -122,15 +122,17 @@ class Game {
       stateCopy = transformField(stateCopy);
     }
 
-    if (
-      JSON.stringify(this.state) !== JSON.stringify(stateCopy) &&
-      !this.isGameOver()
-    ) {
+    const stateChanged =
+      JSON.stringify(this.state) !== JSON.stringify(stateCopy);
+
+    if (stateChanged) {
       this.state = stateCopy;
       this.addNewCell();
       this.updateField();
       this.updateScore(scoreCounter);
     }
+
+    this.isGameOver();
   }
 
   moveUp() {
